@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://djnrwbugycss6"]
+
+[ext_resource type="Texture2D" uid="uid://bibvw4dov0o77" path="res://assets/kenney/Tiles/tile_0161.png" id="1_52g6v"]
+[ext_resource type="Script" path="res://DirectionInputMover2D.gd" id="2_ix4ej"]
+
+[node name="Player" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_52g6v")
+centered = false
+
+[node name="DirectionInputMover2D" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("2_ix4ej")
+target = NodePath("..")
