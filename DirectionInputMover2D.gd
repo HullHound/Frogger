@@ -3,8 +3,12 @@ class_name DirectionInputMover2D
 
 @export var target: Node2D
 @export var movement_amount = 16
+@export var enabled: bool = true
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if !enabled:
+		return
+	
 	if event.is_action_released("Up"):
 		target.position.y -= movement_amount
 	elif event.is_action_released("Down"):
