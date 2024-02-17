@@ -13,6 +13,12 @@ func _process(delta: float) -> void:
 
 
 func _on_damage_source_detector_area_entered(area: Area2D) -> void:
+	died()
+	
+func _on_drowning_detector_drowned() -> void:
+	died()
+	
+func died() -> void:
 	$DirectionInputMover2D.enabled = false
 	$Sprite2D.visible = false
 	$BloodSplatter.emitting = true
@@ -21,4 +27,3 @@ func _on_damage_source_detector_area_entered(area: Area2D) -> void:
 	$Sprite2D.visible = true
 	$DirectionInputMover2D.enabled = true
 	$RespawnEffect.emitting = true
-	

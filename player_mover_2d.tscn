@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dao17qoidwejd"]
+
+[ext_resource type="Script" path="res://player_mover_2d.gd" id="1_lxce3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxxwj"]
+size = Vector2(14, 14)
+
+[node name="PlayerMover2D" type="Node2D"]
+script = ExtResource("1_lxce3")
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_sxxwj")
+
+[connection signal="area_entered" from="PlayerDetector" to="." method="_on_player_detector_area_entered"]
+[connection signal="area_exited" from="PlayerDetector" to="." method="_on_player_detector_area_exited"]

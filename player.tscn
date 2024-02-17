@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://djnrwbugycss6"]
+[gd_scene load_steps=7 format=3 uid="uid://djnrwbugycss6"]
 
 [ext_resource type="Texture2D" uid="uid://bibvw4dov0o77" path="res://assets/kenney/Tiles/tile_0161.png" id="1_52g6v"]
 [ext_resource type="Script" path="res://player.gd" id="1_bwuix"]
 [ext_resource type="Script" path="res://DirectionInputMover2D.gd" id="2_ix4ej"]
+[ext_resource type="PackedScene" uid="uid://bm74w05d4k30h" path="res://drowning_detector.tscn" id="4_67r8u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lp21o"]
 size = Vector2(14, 14)
 
-[node name="Player" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ek6oc"]
+size = Vector2(14, 14)
+
+[node name="Player" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_bwuix")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -19,7 +25,7 @@ script = ExtResource("2_ix4ej")
 target = NodePath("..")
 
 [node name="DamageSourceDetector" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageSourceDetector"]
@@ -51,4 +57,11 @@ emission_shape = 1
 emission_sphere_radius = 7.0
 gravity = Vector2(0, -245)
 
+[node name="DrowningDetector" parent="." instance=ExtResource("4_67r8u")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_ek6oc")
+
 [connection signal="area_entered" from="DamageSourceDetector" to="." method="_on_damage_source_detector_area_entered"]
+[connection signal="drowned" from="DrowningDetector" to="." method="_on_drowning_detector_drowned"]

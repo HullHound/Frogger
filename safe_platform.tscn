@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsss3cf0dkuwi"]
+
+[ext_resource type="Script" path="res://safe_platform.gd" id="1_oh4ny"]
+[ext_resource type="Texture2D" uid="uid://hvxlde26gh12" path="res://assets/kenney/Tiles/tile_0108.png" id="1_y6tmh"]
+[ext_resource type="Script" path="res://AutoMover2D.gd" id="2_coqwb"]
+[ext_resource type="Script" path="res://VisibilityOffset2D.gd" id="3_y2a5s"]
+[ext_resource type="PackedScene" uid="uid://dao17qoidwejd" path="res://player_mover_2d.tscn" id="5_o5lqh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvd14"]
+size = Vector2(14, 14)
+
+[node name="SafePlatform" type="Node2D"]
+script = ExtResource("1_oh4ny")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_y6tmh")
+centered = false
+
+[node name="AutoMover2D" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("2_coqwb")
+target = NodePath("..")
+speed = Vector2(20, 0)
+
+[node name="VisibilityOffset2D" type="VisibleOnScreenNotifier2D" parent="." node_paths=PackedStringArray("target")]
+rect = Rect2(0, 0, 16, 16)
+script = ExtResource("3_y2a5s")
+target = NodePath("..")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_tvd14")
+
+[node name="PlayerMover2D" parent="." instance=ExtResource("5_o5lqh")]
+
+[connection signal="moved" from="AutoMover2D" to="PlayerMover2D" method="move_player"]
