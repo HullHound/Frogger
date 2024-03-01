@@ -1,4 +1,5 @@
 extends Node2D
+class_name PlayerMover2D
 
 var player: Node2D = null
 
@@ -21,3 +22,10 @@ func _on_player_detector_area_exited(area: Area2D) -> void:
 func move_player(movement_amount: Vector2):
 	if player != null:
 		player.position += movement_amount
+
+func clearCollisionShapes():
+	for child in $PlayerDetector.get_children():
+		child.queue_free()
+		
+func addCollisionShape(shape: CollisionShape2D):
+	$PlayerDetector.add_child(shape)

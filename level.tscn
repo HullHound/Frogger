@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ct2k4ynw1qqka"]
+[gd_scene load_steps=14 format=3 uid="uid://ct2k4ynw1qqka"]
 
 [ext_resource type="Texture2D" uid="uid://b1wrt61yukuix" path="res://assets/kenney/Tilemap/tilemap_packed.png" id="1_ebd1x"]
 [ext_resource type="PackedScene" uid="uid://djnrwbugycss6" path="res://player.tscn" id="2_wwdlu"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dq5i447wstq2y" path="res://assets/kenney/Tiles/tile_0116.png" id="7_fyix3"]
 [ext_resource type="Texture2D" uid="uid://d2s423wn0yt24" path="res://assets/kenney/Tiles/tile_0135.png" id="8_iux68"]
 [ext_resource type="PackedScene" uid="uid://dsss3cf0dkuwi" path="res://safe_platform.tscn" id="9_a8g8j"]
+[ext_resource type="PackedScene" uid="uid://b2441db73fl1k" path="res://un_safe_platform.tscn" id="9_sf7hx"]
+[ext_resource type="Texture2D" uid="uid://b6b7ku06aj8i0" path="res://assets/kenney/Tiles/tile_0155.png" id="10_vp8n1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7jk0u"]
 texture = ExtResource("1_ebd1x")
@@ -723,9 +725,130 @@ rotation_offset = Vector2(-272, 0)
 [node name="Lane 6" type="Node2D" parent="Lanes"]
 position = Vector2(0, 80)
 
-[node name="SafePlatform" parent="Lanes/Lane 6" instance=ExtResource("9_a8g8j")]
+[node name="UnSafePlatform" parent="Lanes/Lane 6" instance=ExtResource("9_sf7hx")]
 speed = Vector2(20, 0)
-rotation_offset = Vector2(-272, 0)
+rotation_offset = Vector2(-304, 0)
+length = 3
+
+[node name="UnSafePlatform2" parent="Lanes/Lane 6" instance=ExtResource("9_sf7hx")]
+position = Vector2(80, 0)
+speed = Vector2(20, 0)
+rotation_offset = Vector2(-304, 0)
+length = 3
+
+[node name="UnSafePlatform3" parent="Lanes/Lane 6" instance=ExtResource("9_sf7hx")]
+position = Vector2(160, 0)
+speed = Vector2(20, 0)
+rotation_offset = Vector2(-304, 0)
+length = 3
+
+[node name="Lane 7" type="Node2D" parent="Lanes"]
+position = Vector2(0, 64)
+
+[node name="SafePlatform" parent="Lanes/Lane 7" instance=ExtResource("9_a8g8j")]
+speed = Vector2(-35, 0)
+rotation_offset = Vector2(320, 0)
+tile_offset_amount = Vector2(-16, 0)
+length = 4
+
+[node name="SafePlatform2" parent="Lanes/Lane 7" instance=ExtResource("9_a8g8j")]
+position = Vector2(128, 0)
+speed = Vector2(-35, 0)
+rotation_offset = Vector2(320, 0)
+tile_offset_amount = Vector2(-16, 0)
+length = 4
+
+[node name="Lane 8" type="Node2D" parent="Lanes"]
+position = Vector2(0, 48)
+
+[node name="SafePlatform" parent="Lanes/Lane 8" instance=ExtResource("9_a8g8j")]
+speed = Vector2(30, 0)
+rotation_offset = Vector2(-320, 0)
+length = 2
+
+[node name="SafePlatform2" parent="Lanes/Lane 8" instance=ExtResource("9_a8g8j")]
+position = Vector2(48, 0)
+speed = Vector2(30, 0)
+rotation_offset = Vector2(-320, 0)
+length = 2
+
+[node name="SafePlatform3" parent="Lanes/Lane 8" instance=ExtResource("9_a8g8j")]
+position = Vector2(96, 0)
+speed = Vector2(30, 0)
+rotation_offset = Vector2(-320, 0)
+length = 2
+
+[node name="SafePlatform4" parent="Lanes/Lane 8" instance=ExtResource("9_a8g8j")]
+position = Vector2(144, 0)
+speed = Vector2(30, 0)
+rotation_offset = Vector2(-320, 0)
+length = 2
+
+[node name="SafePlatform5" parent="Lanes/Lane 8" instance=ExtResource("9_a8g8j")]
+position = Vector2(192, 0)
+speed = Vector2(30, 0)
+rotation_offset = Vector2(-320, 0)
+length = 2
+
+[node name="SafePlatform6" parent="Lanes/Lane 8" instance=ExtResource("9_a8g8j")]
+position = Vector2(240, 0)
+speed = Vector2(30, 0)
+rotation_offset = Vector2(-320, 0)
+length = 2
+
+[node name="Lane 9" type="Node2D" parent="Lanes"]
+position = Vector2(0, 32)
+
+[node name="UnSafePlatform" parent="Lanes/Lane 9" instance=ExtResource("9_sf7hx")]
+speed = Vector2(-20, 0)
+rotation_offset = Vector2(320, 0)
+tile_offset_amount = Vector2(-16, 0)
+length = 5
+
+[node name="UnSafePlatform2" parent="Lanes/Lane 9" instance=ExtResource("9_sf7hx")]
+position = Vector2(128, 0)
+speed = Vector2(-20, 0)
+rotation_offset = Vector2(320, 0)
+tile_offset_amount = Vector2(-16, 0)
+length = 5
+
+[node name="Lane 10" type="Node2D" parent="Lanes"]
+position = Vector2(0, 16)
+
+[node name="SafePlatform" parent="Lanes/Lane 10" instance=ExtResource("9_a8g8j")]
+position = Vector2(80, 0)
+speed = Vector2(25, 0)
+rotation_offset = Vector2(-288, 0)
+length = 3
+
+[node name="Vehicle" parent="Lanes/Lane 10" instance=ExtResource("3_sklvt")]
+position = Vector2(128, 0)
+texture = ExtResource("10_vp8n1")
+speed = Vector2(25, 0)
+rotation_offset = Vector2(-288, 0)
+
+[node name="SafePlatform2" parent="Lanes/Lane 10" instance=ExtResource("9_a8g8j")]
+position = Vector2(160, 0)
+speed = Vector2(25, 0)
+rotation_offset = Vector2(-288, 0)
+length = 3
+
+[node name="Vehicle2" parent="Lanes/Lane 10" instance=ExtResource("3_sklvt")]
+position = Vector2(208, 0)
+texture = ExtResource("10_vp8n1")
+speed = Vector2(25, 0)
+rotation_offset = Vector2(-288, 0)
+
+[node name="SafePlatform3" parent="Lanes/Lane 10" instance=ExtResource("9_a8g8j")]
+speed = Vector2(25, 0)
+rotation_offset = Vector2(-288, 0)
+length = 3
+
+[node name="Vehicle3" parent="Lanes/Lane 10" instance=ExtResource("3_sklvt")]
+position = Vector2(48, 0)
+texture = ExtResource("10_vp8n1")
+speed = Vector2(25, 0)
+rotation_offset = Vector2(-288, 0)
 
 [node name="Player" parent="." node_paths=PackedStringArray("respawn_location") instance=ExtResource("2_wwdlu")]
 position = Vector2(112, 96)

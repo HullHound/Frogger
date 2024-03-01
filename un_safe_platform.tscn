@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3 uid="uid://b2441db73fl1k"]
+
+[ext_resource type="Script" path="res://safe_platform.gd" id="1_ynvlg"]
+[ext_resource type="Script" path="res://AutoMover2D.gd" id="2_0f1wm"]
+[ext_resource type="Script" path="res://VisibilityOffset2D.gd" id="3_cd4wk"]
+[ext_resource type="PackedScene" uid="uid://dao17qoidwejd" path="res://player_mover_2d.tscn" id="4_jqu6l"]
+[ext_resource type="Texture2D" uid="uid://hvxlde26gh12" path="res://assets/kenney/Tiles/tile_0108.png" id="5_aievc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvd14"]
+size = Vector2(14, 14)
+
+[sub_resource type="Animation" id="Animation_xbvx4"]
+resource_name = "UnsafeCycle"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 1, 1.6, 1.7, 2.3, 2.4, 2.8, 2.9, 3.2, 3.3, 3.5, 3.6, 3.9, 4, 5.9, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.878431, 0.52549, 0.168627, 1), Color(0.878431, 0.52549, 0.168627, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.878431, 0.52549, 0.168627, 1), Color(0.878431, 0.52549, 0.168627, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.878431, 0.52549, 0.168627, 1), Color(0.878431, 0.52549, 0.168627, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.878431, 0, 0.168627, 1), Color(0.878431, 0, 0.168627, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:process_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 5.9, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 4, 0, 0]
+}
+
+[sub_resource type="Animation" id="Animation_rvlnn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:process_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rbqgf"]
+_data = {
+"RESET": SubResource("Animation_rvlnn"),
+"UnsafeCycle": SubResource("Animation_xbvx4")
+}
+
+[node name="UnSafePlatform" type="Node2D"]
+script = ExtResource("1_ynvlg")
+length = 1
+
+[node name="AutoMover2D" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("2_0f1wm")
+target = NodePath("..")
+
+[node name="VisibilityOffset2D" type="VisibleOnScreenNotifier2D" parent="." node_paths=PackedStringArray("target")]
+rect = Rect2(0, 0, 16, 16)
+script = ExtResource("3_cd4wk")
+target = NodePath("..")
+
+[node name="Area2D" type="Area2D" parent="."]
+process_mode = 4
+collision_layer = 16
+collision_mask = 0
+
+[node name="PlayerMover2D" parent="." instance=ExtResource("4_jqu6l")]
+visible = false
+
+[node name="Templates" type="Node2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Templates"]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_tvd14")
+
+[node name="Sprite2D" type="Sprite2D" parent="Templates"]
+texture = ExtResource("5_aievc")
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rbqgf")
+}
+autoplay = "UnsafeCycle"
+
+[connection signal="moved" from="AutoMover2D" to="PlayerMover2D" method="move_player"]
