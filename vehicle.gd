@@ -16,8 +16,3 @@ func _ready() -> void:
 	$Sprite2D.flip_h = flip_h
 	$AutoMover2D.speed = speed
 	$VisibilityOffset2D.offset_amount = rotation_offset
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

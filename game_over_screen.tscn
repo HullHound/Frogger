@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0h2elyek3epe"]
+
+[ext_resource type="Texture2D" uid="uid://df3p65ltoa5iu" path="res://assets/kenney-ui/PNG/grey_panel.png" id="1_fd26t"]
+[ext_resource type="Script" path="res://game_over_screen.gd" id="1_pfyvj"]
+[ext_resource type="Texture2D" uid="uid://c0uxea2f3kp4d" path="res://assets/kenney-ui/PNG/blue_button02.png" id="2_p5eju"]
+[ext_resource type="Texture2D" uid="uid://dtnhcravp2hov" path="res://assets/kenney-ui/PNG/blue_button03.png" id="3_53tm4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_31faw"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gs6qk"]
+font_size = 14
+
+[node name="GameOverScreen" type="CenterContainer"]
+offset_right = 240.0
+offset_bottom = 224.0
+script = ExtResource("1_pfyvj")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(100, 55)
+layout_mode = 2
+texture = ExtResource("1_fd26t")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/VBoxContainer"]
+layout_mode = 2
+text = "You Win!"
+label_settings = SubResource("LabelSettings_31faw")
+horizontal_alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="NinePatchRect/VBoxContainer"]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+texture_normal = ExtResource("2_p5eju")
+texture_pressed = ExtResource("3_53tm4")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="NinePatchRect/VBoxContainer/TextureButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -10.0
+offset_right = 35.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play Again
+"
+label_settings = SubResource("LabelSettings_gs6qk")
+
+[connection signal="pressed" from="NinePatchRect/VBoxContainer/TextureButton" to="." method="_on_texture_button_pressed"]

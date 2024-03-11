@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ct2k4ynw1qqka"]
+[gd_scene load_steps=25 format=3 uid="uid://ct2k4ynw1qqka"]
 
 [ext_resource type="Texture2D" uid="uid://b1wrt61yukuix" path="res://assets/kenney/Tilemap/tilemap_packed.png" id="1_ebd1x"]
 [ext_resource type="Script" path="res://level.gd" id="1_o5pec"]
@@ -18,6 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://br11lsewln6h3" path="res://assets/kenney/Tiles/tile_0016.png" id="16_dgd2x"]
 [ext_resource type="Texture2D" uid="uid://b1jf2yhik66j6" path="res://assets/kenney/Tiles/tile_0034.png" id="17_ac1e5"]
 [ext_resource type="Script" path="res://ImageDisplay.gd" id="19_krc5q"]
+[ext_resource type="PackedScene" uid="uid://c0h2elyek3epe" path="res://game_over_screen.tscn" id="19_rfu4r"]
+[ext_resource type="Texture2D" uid="uid://bibvw4dov0o77" path="res://assets/kenney/Tiles/tile_0161.png" id="19_tcwgc"]
+[ext_resource type="AudioStream" uid="uid://c7qudwdahuofr" path="res://assets/sounds/boop.mp3" id="21_6vlt6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7jk0u"]
 texture = ExtResource("1_ebd1x")
@@ -622,6 +625,9 @@ physics_layer_0/collision_layer = 8
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_7jk0u")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7t452"]
+size = Vector2(240, 208)
+
 [node name="Level" type="Node2D"]
 script = ExtResource("1_o5pec")
 
@@ -859,7 +865,6 @@ speed = Vector2(25, 0)
 rotation_offset = Vector2(-288, 0)
 
 [node name="Lanes 11" type="Node2D" parent="Lanes"]
-position = Vector2(0, 96)
 
 [node name="SafePlatform" parent="Lanes/Lanes 11" instance=ExtResource("9_a8g8j")]
 position = Vector2(16, 0)
@@ -896,11 +901,11 @@ position = Vector2(208, 0)
 texture = ExtResource("17_ac1e5")
 
 [node name="Player" parent="." node_paths=PackedStringArray("respawn_location") instance=ExtResource("2_wwdlu")]
-position = Vector2(112, 96)
+position = Vector2(112, 192)
 respawn_location = NodePath("../RespawnPoint")
 
 [node name="RespawnPoint" type="Marker2D" parent="."]
-position = Vector2(112, 96)
+position = Vector2(112, 192)
 
 [node name="FlagDisplay" type="Node2D" parent="."]
 position = Vector2(8, 216)
@@ -908,9 +913,33 @@ script = ExtResource("19_krc5q")
 texture = ExtResource("16_dgd2x")
 initial_value = 0
 
+[node name="LivesDisplay" type="Node2D" parent="."]
+position = Vector2(232, 216)
+script = ExtResource("19_krc5q")
+texture = ExtResource("19_tcwgc")
+texture_offset = Vector2(-16, 0)
+initial_value = 5
+
+[node name="GameOverScreen" parent="." instance=ExtResource("19_rfu4r")]
+visible = false
+
+[node name="PlayArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayArea"]
+position = Vector2(120, 104)
+shape = SubResource("RectangleShape2D_7t452")
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_6vlt6")
+
 [connection signal="picked_up" from="Lanes/Lanes 11/Flag" to="." method="_on_flag_picked_up"]
 [connection signal="picked_up" from="Lanes/Lanes 11/Flag2" to="." method="_on_flag_picked_up"]
 [connection signal="picked_up" from="Lanes/Lanes 11/Flag3" to="." method="_on_flag_picked_up"]
 [connection signal="picked_up" from="Lanes/Lanes 11/Flag4" to="." method="_on_flag_picked_up"]
 [connection signal="picked_up" from="Lanes/Lanes 11/Flag5" to="." method="_on_flag_picked_up"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="value_changed" from="FlagDisplay" to="." method="_on_flag_display_value_changed"]
+[connection signal="value_changed" from="LivesDisplay" to="." method="_on_lives_display_value_changed"]
+[connection signal="area_exited" from="PlayArea" to="." method="_on_play_area_area_exited"]

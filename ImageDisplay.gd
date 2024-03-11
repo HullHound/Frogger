@@ -14,11 +14,10 @@ func _ready() -> void:
 	current_value = initial_value
 	displayValue()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void: 
-	pass
-
 func displayValue():
+	for item in get_children():
+		item.queue_free()
+	
 	for item in range(1, current_value + 1):
 		var sprite = Sprite2D.new()
 		sprite.texture = texture

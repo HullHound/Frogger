@@ -20,9 +20,12 @@ func _ready() -> void:
 	$VisibilityOffset2D.offset_amount = rotation_offset
 	setupLength()
 
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		setupLength()
+
 func setupLength():
-	
-	if $Area2D ==null:
+	if get_node_or_null("Area2D") == null:
 		return
 	
 	for child in $Area2D.get_children():
